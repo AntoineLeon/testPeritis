@@ -1,9 +1,10 @@
-import Link from "../ui/Link";
-import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, IconButton, Toolbar} from "@mui/material";
 import * as React from "react";
+import Drawer from "../ui/Drawer/Drawer";
+import HeaderLinks from "../ui/HeaderLinks";
 
 
-function Header(props) {
+function Header() {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -12,34 +13,41 @@ function Header(props) {
   };
 
   return (
-    <div>
-
-      <AppBar component="nav">
-        <Toolbar>
+    <>
+      <AppBar component="nav" position='fixed'>
+        <Toolbar sx={{justifyContent: {xs: 'right', sm: 'center'}}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{mr: 2, display: {sm: 'none'}}}
+            sx={{display: {sm: 'none'}}}
           >
+            <Box>
+              <img src='assets/menu.png' alt='menu'/>
+            </Box>
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
-          >
-            MUI
-          </Typography>
-          <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-            {['LE COTÉ LUMINEUX', 'LE COTÉ OBSCUR', 'L’EMPIRE', 'LES DROÏDES', 'LES EWOKS', 'JABBA LE HUTT]'].map(title =>
-              <Link title={title}/>
-            )}
+          <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
+            <HeaderLinks/>
           </Box>
         </Toolbar>
       </AppBar>
+      <Drawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen}/>
 
-    </div>
+      <Box position={'relative'}>
+        <img width={'100%'} height={'500px'} src={'assets/header-bg-2x.png'} alt={'header2x'}
+             style={{position: 'relative', top: 0, right: 0}}/>
+        <img src={'assets/logo.png'} style={{
+          objectFit: 'cover',
+          objectPosition: 'center',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          position: "absolute",
+          maxWidth: '100%'
+        }} alt={'header'}/>
+      </Box>
+    </>
   );
 }
 
